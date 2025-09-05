@@ -1,9 +1,0 @@
-{
-  "apiKey": "TU_API_KEY",
-  "authDomain": "yerba-ac4e5.firebaseapp.com",
-  "projectId": "yerba-ac4e5",
-  "storageBucket": "yerba-ac4e5.appspot.com",
-  "messagingSenderId": "XXXXXXXXXXXX",
-  "appId": "1:XXXXXXXXXXXX:web:YYYYYYYYYYYYYYYYYYYY",
-  "databaseURL": "https://yerba-ac4e5-default-rtdb.firebaseio.com"
-}

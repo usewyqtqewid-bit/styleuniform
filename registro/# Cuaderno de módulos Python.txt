@@ -1,9 +1,0 @@
-# Cuaderno de módulos Python
-
-## os
-- Crear carpetas: os.makedirs("nueva")
-- Listar archivos: os.listdir(".")
-
-## math
-- math.sqrt(9) -> 3
-- math.pi -> 3.14159
