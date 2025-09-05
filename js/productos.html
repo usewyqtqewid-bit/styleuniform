@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>StyleUniform - Productos</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="productos">
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">StyleUniform</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+          <li class="nav-item active"><a class="nav-link" href="productos.html">Productos</a></li>
+        </ul>
+        <form class="form-inline">
+          <input id="q" class="form-control mr-sm-2" type="search" placeholder="Buscar">
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <!-- FILTROS -->
+  <div class="container mt-3">
+    <div class="d-flex align-items-center gap-2 flex-wrap">
+      <button class="btn btn-outline-secondary btn-sm filter" data-cat="todas">Todas</button>
+      <button class="btn btn-outline-secondary btn-sm filter" data-cat="medicina">Medicina</button>
+      <button class="btn btn-outline-secondary btn-sm filter" data-cat="gastronomia">Gastronomía</button>
+      <button class="btn btn-outline-secondary btn-sm filter" data-cat="magisterio">Magisterio/Escolar</button>
+      <button class="btn btn-outline-secondary btn-sm filter" data-cat="empresas">Empresas</button>
+    </div>
+    <div id="grid" class="row mt-3"></div>
+  </div>
+
+  <footer class="bg-dark text-white text-center p-3 mt-5">
+    <p>&copy; 2025 StyleUniform. Todos los derechos reservados.</p>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

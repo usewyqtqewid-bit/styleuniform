@@ -1,0 +1,11 @@
+[
+  {"id":"SU-001","nombre":"Ambo Unisex Blanco","descripcion":"Talle M — Algodón/Poliéster","precio":34999,"categoria":"medicina","imagen_url":"https://via.placeholder.com/600x400?text=Ambo+Unisex"},
+  {"id":"SU-002","nombre":"Guardapolvo Escolar","descripcion":"Talle L — Blanco","precio":28999,"categoria":"magisterio","imagen_url":"https://via.placeholder.com/600x400?text=Guardapolvo"},
+  {"id":"SU-003","nombre":"Chaqueta de Cocinero","descripcion":"Manga larga — 100% algodón","precio":41999,"categoria":"gastronomia","imagen_url":"https://via.placeholder.com/600x400?text=Chaqueta+Cocinero"},
+  {"id":"SU-004","nombre":"Pantalón Médico","descripcion":"Talle M — Elastizado","precio":23999,"categoria":"medicina","imagen_url":"https://via.placeholder.com/600x400?text=Pantalon+Medico"},
+  {"id":"SU-005","nombre":"Pechera Gastronomía","descripcion":"Impermeable — Negro","precio":15999,"categoria":"gastronomia","imagen_url":"https://via.placeholder.com/600x400?text=Pechera"},
+  {"id":"SU-006","nombre":"Chomba Corporativa","descripcion":"Color azul — Logo bordado","precio":19999,"categoria":"empresas","imagen_url":"https://via.placeholder.com/600x400?text=Chomba+Empresa"},
+  {"id":"SU-007","nombre":"Guardapolvo Médico","descripcion":"Talle XL — Bolsillos amplios","precio":37999,"categoria":"medicina","imagen_url":"https://via.placeholder.com/600x400?text=Guardapolvo+Medico"},
+  {"id":"SU-008","nombre":"Remera Empresa","descripcion":"Dry-fit — Personalizable","precio":17999,"categoria":"empresas","imagen_url":"https://via.placeholder.com/600x400?text=Remera+Empresa"},
+  {"id":"SU-009","nombre":"Gorro de Cocina","descripcion":"Clásico — Blanco","precio":9999,"categoria":"gastronomia","imagen_url":"https://via.placeholder.com/600x400?text=Gorro+Cocina"}
+]

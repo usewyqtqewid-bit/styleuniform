@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>StyleUniform - Catálogo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #007bff;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+    }
+    #filtros {
+      text-align: center;
+      margin: 20px;
+    }
+    select {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    #productos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .card h3 {
+      margin: 10px 0 5px;
+    }
+    .card p {
+      font-size: 14px;
+      color: #555;
+    }
+    .precio {
+      font-weight: bold;
+      color: #28a745;
+      margin: 10px 0;
+    }
+    a.btn-whatsapp {
+      display: inline-block;
+      background: #25d366;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    a.btn-whatsapp:hover {
+      background: #1ebe5c;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>StyleUniform - Catálogo</h1>
+  </header>
+
+  <div id="filtros">
+    <label for="categoriaFiltro">Filtrar por categoría:</label>
+    <select id="categoriaFiltro">
+      <option value="todas">Todas</option>
+      <option value="accesorios">Accesorios</option>
+      <option value="medicina">Medicina</option>
+      <option value="chef">Chef</option>
+      <option value="empresa">Empresa</option>
+      <option value="gastronomia">Gastronomía</option>
+      <option value="magisterio">Magisterio</option>
+      <option value="delantal">Delantal</option>
+    </select>
+  </div>
+
+  <main id="productos"></main>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+  <script>
+    // 🔥 Configuración Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyAKdWohLlZ7ngujKtowNUe1YcVPkZ3z-WQ",
+      authDomain: "styleuniform-95019.firebaseapp.com",
+      projectId: "styleuniform-95019",
+      storageBucket: "styleuniform-95019.appspot.com",
+      messagingSenderId: "604291853776",
+      appId: "1:604291853776:web:de9f86d73774eaea421dd5",
+      measurementId: "G-JJCHZWNNZ7"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const productosContainer = document.getElementById("productos");
+    const filtro = document.getElementById("categoriaFiltro");
+
+    // 📥 Cargar productos
+    async function cargarProductos(categoria = "todas") {
+      productosContainer.innerHTML = "<p>Cargando productos...</p>";
+      try {
+        let query = db.collection("productos");
+        if (categoria !== "todas") {
+          query = query.where("categoria", "==", categoria);
+        }
+        const snapshot = await query.get();
+
+        if (snapshot.empty) {
+          productosContainer.innerHTML = "<p>No hay productos en esta categoría.</p>";
+          return;
+        }
+
+        productosContainer.innerHTML = "";
+        snapshot.forEach(doc => {
+          const p = doc.data();
+          const mensaje = encodeURIComponent(`Hola, estoy interesado en el producto: ${p.nombre} (${p.categoria})`);
+          const whatsappLink = `https://wa.me/5491123456789?text=${mensaje}`;
+
+          const card = `
+            <div class="card">
+              <img src="${p.imagen}" alt="${p.nombre}">
+              <h3>${p.nombre}</h3>
+              <p class="precio">$${p.precio}</p>
+              <p>${p.descripcion || ""}</p>
+              <p><em>Categoría: ${p.categoria}</em></p>
+              <a href="${whatsappLink}" target="_blank" class="btn-whatsapp">Consultar por WhatsApp</a>
+            </div>
+          `;
+          productosContainer.innerHTML += card;
+        });
+      } catch (error) {
+        console.error("❌ Error al cargar productos:", error);
+        productosContainer.innerHTML = "<p>Error al cargar productos.</p>";
+      }
+    }
+
+    // 🎛 Cambiar categoría
+    filtro.addEventListener("change", (e) => {
+      cargarProductos(e.target.value);
+    });
+
+    // 🚀 Al iniciar, mostrar todos
+    cargarProductos();
+  </script>
+</body>
+</html>
+

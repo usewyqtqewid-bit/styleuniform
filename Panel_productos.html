@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Panel de Publicación</title>
+  <link rel="stylesheet" href="panel_productos.css" />
+</head>
+<body>
+  <header>
+    <h1>Panel de Publicación</h1>
+    <p>Registrar productos con presencia y huella técnica</p>
+  </header>
+
+  <main>
+    <form id="form-producto">
+      <input type="text" name="nombre" placeholder="Nombre del producto" required />
+      <textarea name="descripcion" placeholder="Descripción" required></textarea>
+      <input type="url" name="imagen_url" placeholder="URL de la imagen" required />
+      <input type="number" name="precio" placeholder="Precio" required />
+      <input type="number" name="stock" placeholder="Stock disponible" required />
+      <select name="categoria">
+        <option value="camisas">Camisas</option>
+        <option value="calzado">Calzado</option>
+        <option value="accesorios">Accesorios</option>
+      </select>
+      <button type="submit">Registrar producto</button>
+    </form>
+
+    <section id="preview">
+      <h2>Vista previa</h2>
+      <div id="producto-preview"></div>
+    </section>
+  </main>
+
+  <script src="guardian_de_publicación.js"></script>
+</body>
+</html>
+

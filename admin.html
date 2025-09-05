@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel de Carga de Productos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    form {
+      max-width: 400px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    input, select, textarea, button {
+      width: 100%;
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #28a745;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #218838;
+    }
+  </style>
+</head>
+<body>
+  <h1>Subir Producto</h1>
+
+  <form id="productoForm">
+    <input type="text" id="nombre" placeholder="Nombre del producto" required>
+    <input type="number" id="precio" placeholder="Precio" required>
+    
+    <select id="categoria" required>
+      <option value="">Seleccionar categoría</option>
+      <option value="accesorios">Accesorios</option>
+      <option value="medicina">Medicina</option>
+      <option value="chef">Chef</option>
+      <option value="empresa">Empresa</option>
+      <option value="gastronomia">Gastronomía</option>
+      <option value="magisterio">Magisterio</option>
+      <option value="delantal">Delantal</option>
+    </select>
+
+    <textarea id="descripcion" placeholder="Descripción"></textarea>
+    
+    <input type="file" id="imagen" accept="image/*" required>
+    
+    <button type="submit">Subir Producto</button>
+  </form>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+  <script>
+    // 🔥 Configuración Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyAKdWohLlZ7ngujKtowNUe1YcVPkZ3z-WQ",
+      authDomain: "styleuniform-95019.firebaseapp.com",
+      projectId: "styleuniform-95019",
+      storageBucket: "styleuniform-95019.appspot.com",
+      messagingSenderId: "604291853776",
+      appId: "1:604291853776:web:de9f86d73774eaea421dd5",
+      measurementId: "G-JJCHZWNNZ7"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+    // 🚀 Subir producto
+    document.getElementById("productoForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const nombre = document.getElementById("nombre").value.trim();
+      const precio = parseFloat(document.getElementById("precio").value);
+      const categoria = document.getElementById("categoria").value;
+      const descripcion = document.getElementById("descripcion").value.trim();
+      const file = document.getElementById("imagen").files[0];
+
+      if (!file) {
+        alert("Selecciona una imagen");
+        return;
+      }
+
+      try {
+        // 📤 Subir imagen a Firebase Storage
+        const storageRef = storage.ref("productos/" + Date.now() + "_" + file.name);
+        await storageRef.put(file);
+        const urlImagen = await storageRef.getDownloadURL();
+
+        // 📄 Guardar en Firestore
+        await db.collection("productos").add({
+          nombre,
+          precio,
+          categoria,
+          descripcion,
+          imagen: urlImagen,
+          creado: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        alert("✅ Producto agregado correctamente");
+        document.getElementById("productoForm").reset();
+      } catch (error) {
+        console.error("❌ Error:", error);
+        alert("Error al subir producto: " + error.message);
+      }
+    });
+  </script>
+</body>
+</html>

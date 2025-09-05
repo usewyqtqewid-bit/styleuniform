@@ -1,0 +1,22 @@
+/* sistema_disculpe.css */
+/* Estilos para mensajes de error, validación y acompañamiento */
+
+.disculpa {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+  padding: 1em;
+  margin: 1em 0;
+  border-radius: 5px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.disculpa h4 {
+  margin-top: 0;
+  font-weight: bold;
+}
+
+.disculpa p {
+  margin: 0.5em 0 0;
+  font-size: 0.95em;
+}

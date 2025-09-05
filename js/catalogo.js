@@ -1,0 +1,67 @@
+// catalogo.js — carga y muestra productos
+async function fetchProductos(){
+  try{
+    const r = await fetch("./data/productos.json", { cache: "no-cache" });
+    if (r.ok) return await r.json();
+  }catch(e){}
+  const r2 = await fetch("./productos.json", { cache: "no-cache" });
+  if (r2.ok) return await r2.json();
+  throw new Error("No se encontró productos.json (ni en /data ni en raíz).");
+}
+
+function renderProductos(items, selGrid){
+  const grid = document.querySelector(selGrid);
+  grid.innerHTML = "";
+  for(const p of items){
+    const el = document.createElement("div");
+    el.className = "product card";
+    el.innerHTML = `
+      <img src="${p.imagen || ''}" alt="${p.nombre || ''}" onerror="this.style.display='none'"/>
+      <div class="pbd">
+        <strong>${p.nombre || '-'}</strong>
+        <div class="muted">${p.categoria || ''}</div>
+        <div class="price">$ ${Number(p.precio||0).toLocaleString("es-AR")}</div>
+        <p>${p.descripcion || ""}</p>
+        <div class="row">
+          <button class="btn" data-act="info" data-id="${p.id}">Más info</button>
+          <button class="btn alt" data-act="comprar" data-id="${p.id}">Comprar</button>
+        </div>
+      </div>
+    `;
+    grid.appendChild(el);
+  }
+  grid.querySelectorAll("button").forEach(b=>{
+    b.addEventListener("click", ()=>{
+      const act = b.dataset.act;
+      const id  = b.dataset.id;
+      const prod = items.find(x=> String(x.id)===String(id));
+      logEvent("product_click", { action: act, id, nombre: prod?.nombre });
+      alert((act==="comprar"?"Compra":"Detalle")+": "+(prod?.nombre||id));
+    });
+  });
+}
+
+async function initCatalogo({ q, cat, grid }){
+  try{
+    const data = await fetchProductos();
+    const iq = document.querySelector(q);
+    const ic = document.querySelector(cat);
+    const apply = ()=>{
+      const term = (iq.value||"").toLowerCase().trim();
+      const cval = ic.value||"";
+      const filtered = data.filter(p=>{
+        const t = !term || (String(p.nombre).toLowerCase().includes(term) || String(p.descripcion||"").toLowerCase().includes(term));
+        const c = !cval || p.categoria===cval;
+        return t && c;
+      });
+      renderProductos(filtered, grid);
+    };
+    iq.addEventListener("input", apply);
+    ic.addEventListener("change", apply);
+    renderProductos(data, grid);
+  }catch(e){
+    console.error(e);
+    alert("No se pudo cargar el catálogo: "+e.message);
+  }
+}
+window.initCatalogo = (opts)=>initCatalogo(opts);
